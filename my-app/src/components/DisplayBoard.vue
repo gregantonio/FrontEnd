@@ -5,7 +5,7 @@
         {{numberOfUsers}}
         </div>
         <div class="btn">
-            <button @click='getAllUsers()' type="button" class="btn btn-warning">blank</button>
+            <FTButton @click='getAllUsers()' type="button" class="btn btn-warning">blank</FTButton>
         </div>        
     </div>
 </template>

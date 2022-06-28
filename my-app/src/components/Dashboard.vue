@@ -1,81 +1,152 @@
 <template>
   <div class="hello">
     <Header />
-    <div class="container mrgnbtm">
-          <div class="row">
-            <div class="col-md-4">
+    <div class="container">
+      <!-- <div class="col">
                 <DisplayBoard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
-            </div>
-            <div class="col-md-4">
-                <DisplayBoard2 :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
-            </div>
-            <div class="col-md-4">
-                <DisplayBoard3 :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
-            </div>
-            <div class="col-md-12">
+            </div> -->
+      <Panel title="Most Popular Airline"  myImagePath="https://cdn-icons-png.flaticon.com/512/723/723955.png" value=Math.random() />
+      <Panel title="Most Popular Departure" myImagePath="https://cdn-icons-png.flaticon.com/512/68/68380.png"/>
+      <Panel title="Most Popular Destination" myImagePath="https://cdn-icons-png.flaticon.com/512/447/447031.png"/>
+      <!-- <div class="col">
                 <Spacer :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
             </div>
-            <div class="col-md-8">
+            <div class="col">
                 <CreateUser @createUser="userCreate($event)" />
             </div>
-            <div class="col-md-4">
+            <div class="col">
                 <DisplayCard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
-            </div>
-          </div>
+            </div> -->
     </div>
-    <div class="row mrgnbtm">
+    <div class="container2">
+      <div class="buttoncontainer">
+        <!-- insert buttons for grid here -->
+        <FTButton big>Flight</FTButton>
+        <FTButton big>Departure</FTButton>
+        <FTButton big>Destination</FTButton>
+        <FTButton big>Date</FTButton>
+        <FTButton big>Rating</FTButton>
+      </div>
+      <div class="gridcontainer">
+        <!-- insert buttons for grid here -->
+        <AGDataGrid class="grid" />
+      </div>
+    </div>
+    <!-- <div class="row mrgnbtm">
         <Users v-if="users.length > 0" :users="users" />
-    </div>
+    </div> -->
   </div>
 </template>
 
+<style scoped>
+.container {  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  /* margin-bottom: 10px; */
+}
+.container2{
+  display:flex;
+  flex-direction: row;
+  /* gap: 10px; */
+}
+.buttoncontainer {
+  display: flex;
+  flex-direction: column;
+  /* height: 100%; */
+  width: 40%;
+  /* width: 77.5rem; */
+  justify-content: center;
+  align-items: center;
+  /* padding: 10px; */
+  margin-left: 10px;
+  margin-right: 10px;
+  /* margin-bottom: 10px; */
+  gap: 20px;
+
+  /* justify-content: space-apart; */
+}
+
+.gridcontainer{
+  display: flex;
+  /* height: 100%; */
+  /* width: 40%; */
+  /* width: 77.5rem; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* padding: 10px; */
+  /* margin-top: 10px; */
+  margin-right: 10px;
+  margin-bottom: 10px;
+  /* gap: 10px; */
+}
+
+.container .col {
+  background: lightblue;
+}
+
+.container .col p {
+  padding: 0.25rem 0.75rem;
+}
+
+</style>
+
 <script>
-import Header from './Header.vue'
-import CreateUser from './CreateUser.vue'
-import DisplayBoard from './DisplayBoard.vue'
-import DisplayBoard2 from './DisplayBoard2.vue'
-import DisplayBoard3 from './DisplayBoard3.vue'
-import DisplayCard from './DisplayCard.vue'
-import Users from './Users.vue'
-import Spacer from "./Spacer.vue"
-import { getAllUsers, createUser } from '../services/UserService'
+import Header from "./Header.vue";
+// import CreateUser from './CreateUser.vue'
+// import DisplayBoard from './DisplayBoard.vue'
+// import DisplayCard from './DisplayCard.vue'
+// import Users from './Users.vue'
+import Panel from "./Panel.vue";
+import FTButton from "./inputs/FTButton.vue";
+import AGDataGrid from "./AGDataGrid.vue";
+
+import { getAllUsers, createUser } from "../services/UserService";
+
+// import { IMAGE_PATH } from "./constants.js";
+// import {var1 as airline, var2 as departure, var3 as destination} from "./constants.js";
+
+// export const IMAGE_PATH;
+// export {var1, var2, var3};
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   components: {
     Header,
-    CreateUser,
-    DisplayBoard,
-    DisplayBoard2,
-    DisplayBoard3,
-    DisplayCard,
-    Spacer,
-    Users
+    // CreateUser,
+    // DisplayBoard,
+    // Users,
+    AGDataGrid,
+    Panel,
+    FTButton,
   },
   data() {
-      return {
-          users: [],
-          numberOfUsers: 0
-      }
+    return {
+      users: [],
+      numberOfUsers: 0,
+    };
   },
   methods: {
     getAllUsers() {
-      getAllUsers().then(response => {
-        console.log(response)
-        this.users = response
-        this.numberOfUsers = this.users.length
-      })
+      getAllUsers().then((response) => {
+        console.log(response);
+        this.users = response;
+        this.numberOfUsers = this.users.length;
+      });
     },
     userCreate(data) {
-      console.log('data:::', data)
-      createUser(data).then(response => {
+      console.log("data:::", data);
+      createUser(data).then((response) => {
         console.log(response);
         this.getAllUsers();
       });
-    }
+    },
   },
-  mounted () {
+  mounted() {
     this.getAllUsers();
-  }
-}
+  },
+};
 </script>
+
