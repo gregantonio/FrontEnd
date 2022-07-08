@@ -4,6 +4,8 @@
     <!-- <FTButton big>Hello World</FTButton> -->
     <!-- <FTButton priority="secondary">Hello World</FTButton> -->
     <Dashboard v-if="settings" /> 
+    <!-- <ejs-combobox> -->
+    <!-- </ejs-combobox> -->
     <!-- <AGDataGrid>Grid</AGDataGrid> -->
   </div>
 </template>
@@ -11,7 +13,7 @@
 <script>
 //import 'bootstrap/dist/css/bootstrap.css'
 //import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+// import { ComboBoxPlugin } from '@syncfusion/ej2-vue-dropdowns';
 import Dashboard from "./components/Dashboard.vue";
 // import FTButton from "./components/inputs/FTButton.vue";
 // import AGDataGrid from './components/AGDataGrid.vue'
@@ -22,6 +24,7 @@ export default {
     Dashboard,
     // FTButton,
     // AGDataGrid,
+    // ComboBoxPlugin,
   },
   data() {
     return {

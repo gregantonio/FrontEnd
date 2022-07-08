@@ -1,19 +1,23 @@
 <template>
-  <div class="container">
-    <div class="row">
-        <div class="col-md-12 mrgnbtm">
-       <h4>Search Flights</h4>
-            <form>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <input type="text" class="form-control" v-model="email" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter Information" />
-                    </div>
-                </div>
-                <button type="button" @click='createUser()' class="btn btn-danger">Search</button>
-            </form>
-        </div>
-    </div>
-    </div>
+  <div class="wrapper">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <!-- <div class="row"> -->
+       <!-- <h4>Search Flights</h4> -->
+       <h5>{{title}}</h5>
+        <form>
+          <!-- <input type="text" v-model="inputText" placeholder = {{title}} /> -->
+          
+          <input type="text" v-model="inputText" placeholder = "Search" />
+          <div v-if='open' class='matches'>
+              <div v-for='match in matches' :key="match">{{match}}   </div>
+          </div>
+                <!-- v-model="email" name="email" id="email" aria-describedby="emailHelp" -->
+                <!-- placeholder="Enter Information" -->
+                <!-- {{ title }} -->
+        <!-- <button type="button" @click='createUser()' class="btn btn-danger">Search</button> -->
+        </form>
+    <!-- </div> -->
+  </div>
 </template>
 
 <script>
@@ -21,10 +25,15 @@ export default {
   name: 'CreateUser',
   data() {
     return {
-      firstName: '',
-      lastName: '',
-      email: ''
+      // title: 'hi',
+      search:''
     }
+  },
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
   },
   methods: {
       createUser() {
@@ -43,5 +52,10 @@ export default {
           this.email = "";
       }
   }
+  // computed: {
+  //   filteredItems:function(){
+  //     return this.
+  //   }
+  // }
 }
 </script>

@@ -5,9 +5,10 @@
       <!-- <div class="col">
                 <DisplayBoard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
             </div> -->
-      <Panel title="Most Popular Airline"  myImagePath="https://cdn-icons-png.flaticon.com/512/723/723955.png" value=Math.random() />
-      <Panel title="Most Popular Departure" myImagePath="https://cdn-icons-png.flaticon.com/512/68/68380.png"/>
-      <Panel title="Most Popular Destination" myImagePath="https://cdn-icons-png.flaticon.com/512/447/447031.png"/>
+      <!-- <ChildComponent @send-message="handleSendMessage" /> -->
+      <Panel title="Most Popular Airline"  myImagePath="https://cdn-icons-png.flaticon.com/512/723/723955.png" value=1 />
+      <Panel title="Most Popular Departure" myImagePath="https://cdn-icons-png.flaticon.com/512/68/68380.png" value=2 />
+      <Panel title="Most Popular Destination" myImagePath="https://cdn-icons-png.flaticon.com/512/447/447031.png" value=3 />
       <!-- <div class="col">
                 <Spacer :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
             </div>
@@ -21,11 +22,22 @@
     <div class="container2">
       <div class="buttoncontainer">
         <!-- insert buttons for grid here -->
-        <FTButton big>Flight</FTButton>
+        <!-- <CreateUser @createUser="userCreate($event)" text="hello"/>
+        <CreateUser @createUser="userCreate($event)" text="hello"/>
+        <CreateUser @createUser="userCreate($event)" text="hello"/>
+        <CreateUser @createUser="userCreate($event)" text="hello"/>
+        <CreateUser @createUser="userCreate($event)" text="hello"/> -->
+        <CreateUser title="Flight"/>
+        <CreateUser title="Departure"/>
+        <CreateUser title="Destination"/>
+        <CreateUser title="Date"/>
+
+        <!-- <FTButton big>Flight</FTButton>
         <FTButton big>Departure</FTButton>
         <FTButton big>Destination</FTButton>
         <FTButton big>Date</FTButton>
         <FTButton big>Rating</FTButton>
+        <TextSearch big>Rating</TextSearch> -->
       </div>
       <div class="gridcontainer">
         <!-- insert buttons for grid here -->
@@ -64,7 +76,8 @@
   margin-left: 10px;
   margin-right: 10px;
   /* margin-bottom: 10px; */
-  gap: 20px;
+  margin-top: -33px;
+  /* gap: 20px; */
 
   /* justify-content: space-apart; */
 }
@@ -95,12 +108,13 @@
 
 <script>
 import Header from "./Header.vue";
-// import CreateUser from './CreateUser.vue'
+import CreateUser from './CreateUser.vue';
 // import DisplayBoard from './DisplayBoard.vue'
 // import DisplayCard from './DisplayCard.vue'
 // import Users from './Users.vue'
 import Panel from "./Panel.vue";
-import FTButton from "./inputs/FTButton.vue";
+// import FTButton from "./inputs/FTButton.vue";
+// import TextSearch from "./inputs/TextSearch.vue";
 import AGDataGrid from "./AGDataGrid.vue";
 
 import { getAllUsers, createUser } from "../services/UserService";
@@ -115,12 +129,13 @@ export default {
   name: "Dashboard",
   components: {
     Header,
-    // CreateUser,
+    CreateUser,
     // DisplayBoard,
     // Users,
     AGDataGrid,
     Panel,
-    FTButton,
+    // FTButton,
+    // TextSearch,
   },
   data() {
     return {
@@ -143,8 +158,14 @@ export default {
         this.getAllUsers();
       });
     },
+    handleSendMessage(event, value2) {
+      //Our event handler gets the event, as well as any arguments
+      //the child passes to the event
+      console.log('From the child:', value2);
+    }
   },
   mounted() {
+    // const res = axios.get() <-- insert local host proxy url to make request to backend server
     this.getAllUsers();
   },
 };

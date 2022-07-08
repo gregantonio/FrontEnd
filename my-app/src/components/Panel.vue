@@ -1,19 +1,20 @@
 <template>
-  <div class="panel">
-    <div class="panel-inner">
-      <div class="panel-front">
-    <!-- <h4><img src="https://cdn-icons-png.flaticon.com/512/447/447031.png" alt="Image" style="width: 25%" /></h4> -->
-        <img :src="myImagePath" alt="something went wrong" style="width: 20%" />
-      </div>
-      <div class="panel-back">
-        <p>{{ value }}</p>
-        <h4>{{ title }}</h4>
-      </div>
-    </div>
+  <div class="panel" @click="getMostPopularAirline()">
+    <img :src="myImagePath" alt="something went wrong" style="width: 20%" />
+    <!-- <p>{{ value }}</p>
+    <i @click="$emit('icon-clicked', $event.target.value)">?</i> -->
+    <!-- <h1 @click="myFunction()">CLICK ME! = {{ randomNumber }}</h1> -->
+    <!-- <button @click="myFunction()">ClickMe</button> -->
+   <h3 v-if="value==1">{{mostPopularAirline}}</h3>
+     <h3 v-if="value==2">{{mostPopularDep}}</h3>
+       <h3 v-if="value==3">{{mostPopularArrival}}</h3>
+    <h4>{{ title }}</h4>
+    
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "Panel",
   props: {
@@ -29,8 +30,80 @@ export default {
     value: {
       type: Number,
       required: true
+    },
+    methods: { 
+      type: Function },
+  },
+  data() {
+    return {
+      mostPopularAirline: "Click me to find out!",
+      mostPopularDep: "Click me to find out!",
+      mostPopularArrival: "Click me to find out!",
     }
-  }
+  },
+  methods: {
+    // myFunction() {
+    //   this.randomNumber = Math.floor(Math.random()*100) //multiplied to get random number 0 - 100
+    // }    
+  },
+  mounted() {
+    axios({
+        url: 'http://localhost:8080/ESProxy/flightdata/_search',
+        method: 'POST',
+        timeout: 0,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+          "size": 0,
+          "aggs": {
+            "genres": {
+              "terms": { "field": "airline.name.keyword" }
+            }
+          }
+        })
+      }).then((res) => {
+      this.mostPopularAirline=res.data.aggregations.genres.buckets[0].key;
+      });
+    
+  axios({
+      url: 'http://localhost:8080/ESProxy/flightdata/_search',
+      method: 'POST',
+      timeout: 0,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({
+      "size": 0, 
+    "aggs": {
+      "genres": {
+        "terms": { "field": "departure.airport.keyword" }
+      }
+    }
+  })
+    }).then((res) => {
+    this.mostPopularDep=res.data.aggregations.genres.buckets[0].key;
+  });
+
+  axios({
+      url: 'http://localhost:8080/ESProxy/flightdata/_search',
+      method: 'POST',
+      timeout: 0,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({
+      "size": 0, 
+    "aggs": {
+      "genres": {
+        "terms": { "field": "arrival.airport.keyword" }
+      }
+    }
+  })
+    }).then((res) => {
+    this.mostPopularArrival=res.data.aggregations.genres.buckets[0].key;
+  });
+    }
 }
 </script>
 
@@ -69,9 +142,10 @@ export default {
 
 .panel:active{
   /* transform: rotateY(180deg);  */
-  background-color: #ba6ddd;
+  /* background-color: #ba6ddd;
   box-shadow: 0 2px rgb(0, 0, 0);
-  transform: translateY(3px);
+  transform: translateY(3px); */
+
 }
 
 /* Add some padding inside the card container */
